@@ -10,12 +10,12 @@ optimize ROI and understand audience patterns.
 ![Library_project](library_image.png)
 
 ## 2. Technical KPIs & Logic
-![KPIs]("C:\Users\AVITA\Pictures\Screenshots\KPIs.png")
+![Library_project]("C:\Users\AVITA\Pictures\Screenshots\KPIs.png")
 
 
 ### Level: Basic (Data Discovery)
 
-**1. Retrieve unique ad types:  Identify all formats like Image or Video. **
+1.**Retrieve unique ad types:  Identify all formats like Image or Video. **
 
 ```sql
 SELECT DISTINCT 
@@ -25,7 +25,7 @@ ads;
          
 ```
 
-**Count total Impressions: total reach across all campaigns.**
+1.**Count total Impressions: total reach across all campaigns.**
 
 ```sql
 SELECT  
@@ -36,7 +36,7 @@ WHERE
 event_type = 'impression'; 
 ```
 
-**3. List Facebook-only Ads: Filter ads strictly for the Facebook platform.**       
+3.**List Facebook-only Ads: Filter ads strictly for the Facebook platform.**       
 ```sql
 SELECT  
 ad_type, ad_platform 
