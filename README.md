@@ -10,10 +10,10 @@ optimize ROI and understand audience patterns.
 ![Library_project](library_image.png)
 
 ## 2. Technical KPIs & Logic
-![Library_project]("KPIs.png")
+![KPIs]("library.jpg")
 
 
-### Level: Basic (Data Discovery)
+# Level: Basic (Data Discovery)
 
 1.**Retrieve unique ad types:  Identify all formats like Image or Video.**
 
