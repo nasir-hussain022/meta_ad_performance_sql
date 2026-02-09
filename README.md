@@ -1,6 +1,6 @@
 # Meta Ad Performance Analysis – SQL Project 
 
-## 1. Project Overview
+## Project Overview
 
 **Project Title**: Meta Ad Performance 
 
@@ -10,19 +10,144 @@ The goal of this analysis is to evaluate advertising performance across Facebook
 business requires insights into campaign reach, engagement, conversions, and budget utilization to 
 optimize ROI and understand audience patterns. 
 
-# 2. Technical KPIs & Logic
+# Objectives
+ 
+**Primary Goal**: To evaluate advertising performance across Facebook and Instagram to optimize ROI and understand audience patterns.
+**Evaluate Ad Efficiency**: Identify which campaigns generate the highest interaction volume relative to their total cost.
+**Compare Platform Effectiveness**: Directly identify whether Facebook or Instagram is more effective for driving sales through conversion rate comparison.
+**Optimize Ad Scheduling**: Understand user activity patterns throughout the day to find "Peak Engagement Hours" for various ad types.
+**Analyze Funnel Efficiency**: Determine which target gender segments have the highest purchase-to-click ratios.
+**Visualize Budget Distribution**: Rank age groups by budget utilization to see how spending is distributed across target demographics.
+**Measure Viral Impact**: Calculate the relationship between "viral" engagement (shares) and hard conversions (purchases).
+**Identify Underperformers**: Detect campaigns with fewer than 1,000 impressions to flag low-performing ads. 
+**Detect Seasonal Trends**: Track the monthly growth trend of purchases to find peak activity periods throughout the year.
+**Demographic Cost-Effectiveness**: Determine which age groups provide the cheapest conversions for better future budget allocation.
 
-<img width="638" height="666" alt="KPIs" src="https://github.com/user-attachments/assets/4ccccc6d-c492-44ae-b815-8daa21ffd5b8" />
+# Project Structure
 
-## Project Structure
-
-### 1. Database Se
+### 1. Database Setup
 
 <img width="1007" height="689" alt="ad_erd" src="https://github.com/user-attachments/assets/2f204435-9fc2-48d9-a178-77d670ab884a" />
-tup
 
-- **Database Creation**: Created a database named `ad_performance`.
-- **Table Creation**: Created tables for ad_events, ads, campaigns, and users. Each table includes relevant columns and relationships.
+**Database Creation**: Created a database named `ad_performance`.
+**Table Creation**: Created tables for ad_events, ads, campaigns, and users. Each table includes relevant columns and relationships.
+
+  ```sql
+
+-- Create ad_events table
+
+create table ad_events (
+event_id int,
+ad_id	int,
+user_id	varchar(20),
+`timestamp` text,
+day_of_week text,
+time_of_day text,	
+event_type text
+);
+
+/* Bulk insert- it inserts multiple rows into a single command,
+ making it faster and more efficient than inserting rows on by one. Data is large that's why I preferred this method */
+
+load data local infile "C:/Users/AVITA/Downloads/ad_events.csv"
+into table ad_events
+fields terminated by ','
+lines terminated by '\n'
+ignore 1 rows;
+
+
+-- Create ads table
+
+create table ads (
+ad_id int primary key,
+campaign_id	int,
+ad_platform	varchar(20),
+ad_type	varchar(20),
+target_gender varchar(20),
+target_age_group varchar(20),	
+target_interests varchar(20)
+);
+
+
+load data local infile "C:/Users/AVITA/Downloads/ads.csv" 
+into table ads
+fields terminated by ','
+lines terminated by '\r\n'
+ignore 1 rows;
+
+-- Import the remaining tables(campaigns, and users) from 'Table data Import Wizard'
+
+
+-- Add Primary Key to the ads table (ad_id);
+
+alter table ads
+add primary key(ad_id);
+                             -- relation btw ads (P) and ad_events (F)
+                           
+-- Add Foreign Key to the ad_events table  (ad_id)
+
+alter table ad_events
+add constraint  fk_ad
+foreign key (ad_id)
+REFERENCES ads(ad_id);
+
+                             -- relation btw ads (F) campaign (P)
+                              
+-- Add Foreign Key to the ads table  (campaign_id)
+
+alter table ads
+add constraint  fk_camp
+foreign key (campaign_id)
+REFERENCES campaigns(campaign_id);
+
+Alter table ad_events
+modify column user_id varchar(20);
+
+delete from ad_events 
+where user_id NOT IN (select user_id from users);
+      
+                                -- relation btw users (P) ad_events (F)
+-- Add Foreign Key to the ad_events table (user_id)
+
+alter table ad_events
+add constraint  fk_users
+foreign key (user_id)
+REFERENCES users(user_id) 
+;
+
+-- Updating table
+
+Update campaigns
+set start_date = STR_TO_DATE (start_date ,'%d-%m-%Y');
+
+-- type casting
+
+Alter table campaigns
+modify column start_date DATE;
+
+Update campaigns
+set end_date = STR_TO_DATE (end_date ,'%d-%m-%Y');
+
+-- type casting
+
+Alter table campaigns
+modify column end_date DATE;
+
+Update ad_events
+set `timestamp` = STR_TO_DATE (`timestamp` ,'%d-%m-%Y %H:%i');
+
+-- type casting
+
+Alter table ad_events
+modify column `timestamp` datetime;
+  
+  ```
+
+**Add 
+
+  # 2. Technical KPIs & Logic
+
+<img width="638" height="666" alt="KPIs" src="https://github.com/user-attachments/assets/4ccccc6d-c492-44ae-b815-8daa21ffd5b8" />
 
 ## Level: Basic (Data Discovery)
 
@@ -250,7 +375,7 @@ ORDER BY conversion_rate DESC
 
 ```
 
-
+<img width="193" height="84" alt="Q14" src="https://github.com/user-attachments/assets/e8d6637a-71c0-46e9-93ce-093fd2954c8f" />
 
 14.**Identify the "Peak Engagement Hour" for each Ad Type.**  
 • Purpose: Understand user activity patterns throughout the day to optimize ad scheduling.
@@ -270,6 +395,9 @@ ads a ON a.ad_id = e.ad_id
 GROUP BY 1 , 2 
 ORDER BY peak_engagement DESC; 
 ```
+
+<img width="238" height="92" alt="Q15" src="https://github.com/user-attachments/assets/e8eddfdc-95b6-4fa1-b86c-a577ac0af65f" />
+
 
 ## B. Audience & Demographic Insights 
 
@@ -300,6 +428,8 @@ ORDER BY 1;
 
 ```
 
+<img width="206" height="95" alt="Q16" src="https://github.com/user-attachments/assets/3945b075-724f-4549-947b-a9cef653f410" />
+
 
 16.**Rank Age Groups by total Budget Utilization.**  
 •  Purpose: Visualize how the budget is distributed across target demographics.
@@ -311,6 +441,9 @@ GROUP BY age_group
 ORDER BY total_spend DESC; 
 
 ```
+
+<img width="204" height="98" alt="Q17" src="https://github.com/user-attachments/assets/f31702d5-5120-4535-ae32-28ca82b25b65" />
+
 
 17.**Calculate the "Viral Impact" (Shares per Purchase).**  
 •  Purpose: Measure the relationship between "viral" engagement and hard conversions.
@@ -328,6 +461,9 @@ FROM
 ad_events;  
 
 ```
+
+<img width="164" height="66" alt="Q18" src="https://github.com/user-attachments/assets/3c66e459-fb95-4226-9264-7067c4108090" />
+
 
 ## C. Data Integrity & Seasonal Reporting 
 
@@ -354,6 +490,7 @@ END) < 1000;
 
 ```
 
+<img width="260" height="119" alt="Q20" src="https://github.com/user-attachments/assets/fbe909b6-c685-4c74-b793-c59720a032cb" />
 
 19.**Monthly Growth Trend of Purchases.**  
 •  Purpose: Detect seasonal trends and peak activity months. 
@@ -371,6 +508,7 @@ ORDER BY purchases DESC;
 
 ```
 
+<img width="221" height="121" alt="Q21" src="https://github.com/user-attachments/assets/9dd095f0-a09c-4c23-a8f1-5dcf3cf4646d" />
 
 20.**Performance Matrix: Budget vs. Total Engagements per Ad Type.**  
 •  Purpose: Compare the cost of different ad formats against the engagement volume they generate.
@@ -393,6 +531,8 @@ GROUP BY 1
 ORDER BY budget DESC; 
 
 ```
+
+<img width="281" height="118" alt="Q22" src="https://github.com/user-attachments/assets/dc0ff6fd-9102-483f-bd39-a48051e6f3d1" />
 
 
 21.**Find the most "Cost-Effective" Age Group (Budget per Purchase).**  
@@ -421,6 +561,7 @@ LIMIT 5;
 
 ```
 
+<img width="259" height="130" alt="Q23" src="https://github.com/user-attachments/assets/161692f6-bbea-4d2a-bc3b-d9ce384140df" />
 
 ## Conclusion
 
