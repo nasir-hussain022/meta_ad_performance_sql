@@ -11,7 +11,8 @@ business requires insights into campaign reach, engagement, conversions, and bud
 optimize ROI and understand audience patterns. 
 
 ## 2. Technical KPIs & Logic
-![KPIs]("C:\ad_performance_sql\KPIs.png")
+
+![KPIs]("KPIs.png")
 
 ## Project Structure
 
