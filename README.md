@@ -7,13 +7,21 @@ The goal of this analysis is to evaluate advertising performance across Facebook
 business requires insights into campaign reach, engagement, conversions, and budget utilization to 
 optimize ROI and understand audience patterns. 
 
-![Library_project](library_image.png)
+**Project Title**: Meta Ad Performance 
+**Database**: `ad_performance`
 
 ## 2. Technical KPIs & Logic
-![KPIs]("library.jpg")
+![KPIs]("KPIs.png")
 
+## Project Structure
 
-# Level: Basic (Data Discovery)
+### 1. Database Setup
+![ERD]("ad_erd.png")
+
+- **Database Creation**: Created a database named `ad_performance`.
+- **Table Creation**: Created tables for branches, employees, members, books, issued status, and return status. Each table includes relevant columns and relationships.
+
+## Level: Basic (Data Discovery)
 
 1.**Retrieve unique ad types:  Identify all formats like Image or Video.**
 
@@ -45,7 +53,7 @@ ads
 WHERE 
 ad_platform = 'facebook'; 
 ```
-###Level: Intermediate (Aggregation & Joins) 
+## Level: Intermediate (Aggregation & Joins) 
 
 4.**Budget per Platform: Total budget allocated to Facebook vs. Instagram.**
 ```sql
@@ -82,7 +90,7 @@ campaigns;
 ```
 
 
-###Level: Advanced (Calculated Metrics & Trends) 
+## Level: Advanced (Calculated Metrics & Trends) 
 
 7.**Click-Through Rate (CTR) by Ad Type: Identify which format drives most intent.**
 
@@ -172,7 +180,7 @@ A. Business Logic & Performance KPIs
 
 
 ```
-###A. Business Logic & Performance KPIs 
+## A. Business Logic & Performance KPIs 
 
 12.**Calculate the "Ad Efficiency Score" (Total Engagements / Total Budget).**
 ```sql
@@ -194,7 +202,7 @@ LIMIT 5;
 
 ```
 
-13**Compare Facebook vs. Instagram Conversion Rates.** 
+13.**Compare Facebook vs. Instagram Conversion Rates.** 
 •  Purpose: Directly identify the most effective platform for driving sales.
 
 ```sql
@@ -219,7 +227,7 @@ ORDER BY conversion_rate DESC
 ```
 
 
-14**Identify the "Peak Engagement Hour" for each Ad Type.**  
+14.**Identify the "Peak Engagement Hour" for each Ad Type.**  
 • Purpose: Understand user activity patterns throughout the day to optimize ad scheduling.
 
 ```sql
@@ -238,7 +246,7 @@ GROUP BY 1 , 2
 ORDER BY peak_engagement DESC; 
 ```
 
-###B. Audience & Demographic Insights 
+## B. Audience & Demographic Insights 
 
 15.**Find which Target Gender has the highest Purchase-to-Click ratio.**  
 •  Purpose: Analyze funnel efficiency across different gender segments.
@@ -268,7 +276,7 @@ ORDER BY 1;
 ```
 
 
-16**Rank Age Groups by total Budget Utilization.**  
+16.**Rank Age Groups by total Budget Utilization.**  
 •  Purpose: Visualize how the budget is distributed across target demographics.
 
 ```sql
@@ -279,7 +287,7 @@ ORDER BY total_spend DESC;
 
 ```
 
-17**Calculate the "Viral Impact" (Shares per Purchase).**  
+17.**Calculate the "Viral Impact" (Shares per Purchase).**  
 •  Purpose: Measure the relationship between "viral" engagement and hard conversions.
 
 ```sql
@@ -296,9 +304,9 @@ ad_events;
 
 ```
 
-###C. Data Integrity & Seasonal Reporting 
+## C. Data Integrity & Seasonal Reporting 
 
-18**Identify campaigns with less than 1000 impressions (Underperformers).**  
+18.**Identify campaigns with less than 1000 impressions (Underperformers).**  
 
 ```sql
 SELECT  
@@ -339,7 +347,7 @@ ORDER BY purchases DESC;
 ```
 
 
-20**Performance Matrix: Budget vs. Total Engagements per Ad Type.**  
+20.**Performance Matrix: Budget vs. Total Engagements per Ad Type.**  
 •  Purpose: Compare the cost of different ad formats against the engagement volume they generate.
 
 ```sql
