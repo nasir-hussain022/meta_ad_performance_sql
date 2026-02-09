@@ -2,13 +2,12 @@
 
 ## 1. Project Overview
 
-**Project Title**: Meta Ad Performance Analysis 
+**Project Title**: Meta Ad Performance 
+**Database**: `ad_performance`
+
 The goal of this analysis is to evaluate advertising performance across Facebook and Instagram. The 
 business requires insights into campaign reach, engagement, conversions, and budget utilization to 
 optimize ROI and understand audience patterns. 
-
-**Project Title**: Meta Ad Performance 
-**Database**: `ad_performance`
 
 ## 2. Technical KPIs & Logic
 ![KPIs]("KPIs.png")
@@ -19,7 +18,7 @@ optimize ROI and understand audience patterns.
 ![ERD]("ad_erd.png")
 
 - **Database Creation**: Created a database named `ad_performance`.
-- **Table Creation**: Created tables for branches, employees, members, books, issued status, and return status. Each table includes relevant columns and relationships.
+- **Table Creation**: Created tables for ad_events, ads, campaign, and users. Each table includes relevant columns and relationships.
 
 ## Level: Basic (Data Discovery)
 
