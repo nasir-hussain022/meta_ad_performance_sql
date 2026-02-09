@@ -10,14 +10,16 @@ The goal of this analysis is to evaluate advertising performance across Facebook
 business requires insights into campaign reach, engagement, conversions, and budget utilization to 
 optimize ROI and understand audience patterns. 
 
-## 2. Technical KPIs & Logic
+# 2. Technical KPIs & Logic
 
-![KPIs]("KPIs.png")
+<img width="638" height="666" alt="KPIs" src="https://github.com/user-attachments/assets/4ccccc6d-c492-44ae-b815-8daa21ffd5b8" />
 
 ## Project Structure
 
-### 1. Database Setup
-![ERD]("ad_erd.png")
+### 1. Database Se
+
+<img width="1007" height="689" alt="ad_erd" src="https://github.com/user-attachments/assets/2f204435-9fc2-48d9-a178-77d670ab884a" />
+tup
 
 - **Database Creation**: Created a database named `ad_performance`.
 - **Table Creation**: Created tables for ad_events, ads, campaigns, and users. Each table includes relevant columns and relationships.
@@ -33,6 +35,7 @@ FROM
 ads; 
          
 ```
+<img width="96" height="141" alt="Q1" src="https://github.com/user-attachments/assets/d488dad3-1b9f-47a6-b88c-b66848939529" />
 
 2.**Count total Impressions: total reach across all campaigns.**
 
@@ -44,6 +47,7 @@ ad_events
 WHERE 
 event_type = 'impression'; 
 ```
+<img width="141" height="72" alt="Q2" src="https://github.com/user-attachments/assets/ef7432f7-95b2-41ee-a0a0-337162d3822b" />
 
 3.**List Facebook-only Ads: Filter ads strictly for the Facebook platform.**       
 ```sql
@@ -54,6 +58,8 @@ ads
 WHERE 
 ad_platform = 'facebook'; 
 ```
+<img width="167" height="171" alt="Q3" src="https://github.com/user-attachments/assets/42a3b08e-e1c5-45fb-9adb-21b3ba48067e" />
+
 ## Level: Intermediate (Aggregation & Joins) 
 
 4.**Budget per Platform: Total budget allocated to Facebook vs. Instagram.**
@@ -67,6 +73,7 @@ ads a ON a.campaign_id = c.campaign_id
 GROUP BY 1;
 ```
 
+<img width="196" height="123" alt="Q4" src="https://github.com/user-attachments/assets/c228c555-d150-4f31-8a46-761240a1c111" />
 
 5.**Engagement by Age Group: Total interactions per demographic.**
 ```sql
@@ -81,6 +88,8 @@ e.event_type IN ('like' , 'comment', 'share', 'click', 'purchase')
 GROUP BY 1; 
 ```
 
+<img width="194" height="166" alt="Q5" src="https://github.com/user-attachments/assets/e2823774-0f2e-4c89-90df-d7b1c9e43246" />
+
 6.**Average Campaign Budget: Calculate the mean allocation.**
 
 ```sql
@@ -90,6 +99,7 @@ ROUND(AVG(total_budget), 2) AS average_budget
 campaigns; 
 ```
 
+<img width="159" height="100" alt="Q6" src="https://github.com/user-attachments/assets/c8fa213c-6d54-46bd-b941-aa22258fe67a" />
 
 ## Level: Advanced (Calculated Metrics & Trends) 
 
@@ -114,6 +124,9 @@ ad_events e ON a.ad_id = e.ad_id
 GROUP BY a.ad_type; 
 ```
 
+<img width="166" height="134" alt="Q7" src="https://github.com/user-attachments/assets/befc08e4-4789-41f6-aae7-fc101f0333fd" />
+
+
 8.**Hourly Activity Pattern: Find peak activity hours (0-23).**
 
 ```sql
@@ -125,6 +138,8 @@ GROUP BY 1
 ORDER BY peak_activity DESC 
 LIMIT 5; 
 ```
+
+<img width="163" height="137" alt="Q8" src="https://github.com/user-attachments/assets/0e4175d6-d242-48be-9101-d95e33fb1eee" />
 
 9.**Hourly Activity Pattern: Find 2nd peak activity hours (0-23).**
 ```sql
@@ -148,6 +163,8 @@ LIMIT 1;
 
 ```
 
+<img width="159" height="78" alt="Q9" src="https://github.com/user-attachments/assets/a360cfa3-45f8-4095-bd02-b7b57194c153" />
+
 10.**Weekly Performance Trend: Stacked view of performance per week.**
 
 ```sql
@@ -161,6 +178,8 @@ GROUP BY 1 , 2
 ORDER BY performance DESC; 
 
 ```
+
+<img width="238" height="150" alt="Q10" src="https://github.com/user-attachments/assets/eaea7ed4-0921-4636-a0f6-3af2b3df4a03" />
 
 11.**High-ROI Gender Segments: Purchase rates for Target Genders.**
 ```sql
@@ -179,8 +198,10 @@ users u ON u.user_id = e.user_id
 GROUP BY 1; 
 A. Business Logic & Performance KPIs 
 
-
 ```
+
+<img width="200" height="97" alt="Q11" src="https://github.com/user-attachments/assets/5a8a8a1f-a75a-4904-8d1d-c248dbd3fc6e" />
+
 ## A. Business Logic & Performance KPIs 
 
 12.**Calculate the "Ad Efficiency Score" (Total Engagements / Total Budget).**
@@ -202,6 +223,8 @@ ORDER BY ad_efficiency_score DESC
 LIMIT 5;
 
 ```
+
+<img width="286" height="101" alt="Q13" src="https://github.com/user-attachments/assets/846957bc-ff11-4c2f-9658-ae9f61294a13" />
 
 13.**Compare Facebook vs. Instagram Conversion Rates.** 
 •  Purpose: Directly identify the most effective platform for driving sales.
@@ -226,6 +249,7 @@ ad_events e ON e.ad_id = a.ad_id
 ORDER BY conversion_rate DESC 
 
 ```
+
 
 
 14.**Identify the "Peak Engagement Hour" for each Ad Type.**  
