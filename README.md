@@ -3,6 +3,7 @@
 ## 1. Project Overview
 
 **Project Title**: Meta Ad Performance 
+
 **Database**: `ad_performance`
 
 The goal of this analysis is to evaluate advertising performance across Facebook and Instagram. The 
@@ -18,7 +19,7 @@ optimize ROI and understand audience patterns.
 ![ERD]("ad_erd.png")
 
 - **Database Creation**: Created a database named `ad_performance`.
-- **Table Creation**: Created tables for ad_events, ads, campaign, and users. Each table includes relevant columns and relationships.
+- **Table Creation**: Created tables for ad_events, ads, campaigns, and users. Each table includes relevant columns and relationships.
 
 ## Level: Basic (Data Discovery)
 
