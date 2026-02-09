@@ -13,14 +13,23 @@ optimize ROI and understand audience patterns.
 # Objectives
  
 **Primary Goal**: To evaluate advertising performance across Facebook and Instagram to optimize ROI and understand audience patterns.
+
 **Evaluate Ad Efficiency**: Identify which campaigns generate the highest interaction volume relative to their total cost.
+
 **Compare Platform Effectiveness**: Directly identify whether Facebook or Instagram is more effective for driving sales through conversion rate comparison.
+
 **Optimize Ad Scheduling**: Understand user activity patterns throughout the day to find "Peak Engagement Hours" for various ad types.
+
 **Analyze Funnel Efficiency**: Determine which target gender segments have the highest purchase-to-click ratios.
+
 **Visualize Budget Distribution**: Rank age groups by budget utilization to see how spending is distributed across target demographics.
+
 **Measure Viral Impact**: Calculate the relationship between "viral" engagement (shares) and hard conversions (purchases).
+
 **Identify Underperformers**: Detect campaigns with fewer than 1,000 impressions to flag low-performing ads. 
+
 **Detect Seasonal Trends**: Track the monthly growth trend of purchases to find peak activity periods throughout the year.
+
 **Demographic Cost-Effectiveness**: Determine which age groups provide the cheapest conversions for better future budget allocation.
 
 # Project Structure
@@ -29,8 +38,10 @@ optimize ROI and understand audience patterns.
 
 <img width="1007" height="689" alt="ad_erd" src="https://github.com/user-attachments/assets/2f204435-9fc2-48d9-a178-77d670ab884a" />
 
+
 **Database Creation**: Created a database named `ad_performance`.
 **Table Creation**: Created tables for ad_events, ads, campaigns, and users. Each table includes relevant columns and relationships.
+
 
   ```sql
 
@@ -143,7 +154,7 @@ modify column `timestamp` datetime;
   
   ```
 
-**Add 
+
 
   # 2. Technical KPIs & Logic
 
