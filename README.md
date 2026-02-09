@@ -10,12 +10,12 @@ optimize ROI and understand audience patterns.
 ![Library_project](library_image.png)
 
 ## 2. Technical KPIs & Logic
-![Library_project]("C:\Users\AVITA\Pictures\Screenshots\KPIs.png")
+![Library_project]("KPIs.png")
 
 
 ### Level: Basic (Data Discovery)
 
-1.**Retrieve unique ad types:  Identify all formats like Image or Video. **
+1.**Retrieve unique ad types:  Identify all formats like Image or Video.**
 
 ```sql
 SELECT DISTINCT 
@@ -25,7 +25,7 @@ ads;
          
 ```
 
-1.**Count total Impressions: total reach across all campaigns.**
+2.**Count total Impressions: total reach across all campaigns.**
 
 ```sql
 SELECT  
@@ -47,7 +47,7 @@ ad_platform = 'facebook';
 ```
 ###Level: Intermediate (Aggregation & Joins) 
 
-** 4. Budget per Platform: Total budget allocated to Facebook vs. Instagram.**
+4.**Budget per Platform: Total budget allocated to Facebook vs. Instagram.**
 ```sql
 SELECT  
 FROM 
@@ -59,7 +59,7 @@ GROUP BY 1;
 ```
 
 
-**5. Engagement by Age Group: Total interactions per demographic. **
+5.**Engagement by Age Group: Total interactions per demographic.**
 ```sql
 SELECT  
 age_group, COUNT(event_type) AS engagement 
@@ -72,7 +72,7 @@ e.event_type IN ('like' , 'comment', 'share', 'click', 'purchase')
 GROUP BY 1; 
 ```
 
-- **6. Average Campaign Budget: Calculate the mean allocation.**
+6.**Average Campaign Budget: Calculate the mean allocation.**
 
 ```sql
 SELECT  
@@ -84,7 +84,7 @@ campaigns;
 
 ###Level: Advanced (Calculated Metrics & Trends) 
 
-**7. Click-Through Rate (CTR) by Ad Type: Identify which format drives most intent. **:
+7.**Click-Through Rate (CTR) by Ad Type: Identify which format drives most intent.**
 
 ```sql
 SELECT  
@@ -105,7 +105,7 @@ ad_events e ON a.ad_id = e.ad_id
 GROUP BY a.ad_type; 
 ```
 
-**8. Hourly Activity Pattern: Find peak activity hours (0-23). **:
+8.**Hourly Activity Pattern: Find peak activity hours (0-23).**
 
 ```sql
 SELECT  
@@ -117,7 +117,7 @@ ORDER BY peak_activity DESC
 LIMIT 5; 
 ```
 
-**Hourly Activity Pattern: Find 2nd peak activity hours (0-23).**
+9.**Hourly Activity Pattern: Find 2nd peak activity hours (0-23).**
 ```sql
 
 SELECT  
@@ -139,7 +139,7 @@ LIMIT 1;
 
 ```
 
-**10. Weekly Performance Trend: Stacked view of performance per week. **:
+10.**Weekly Performance Trend: Stacked view of performance per week.**
 
 ```sql
 SELECT  
@@ -153,7 +153,7 @@ ORDER BY performance DESC;
 
 ```
 
-**11. High-ROI Gender Segments: Purchase rates for Target Genders. **:
+11.**High-ROI Gender Segments: Purchase rates for Target Genders.**
 ```sql
 SELECT  
 u.user_gender, 
@@ -174,7 +174,7 @@ A. Business Logic & Performance KPIs
 ```
 ###A. Business Logic & Performance KPIs 
 
-**12. Calculate the "Ad Efficiency Score" (Total Engagements / Total Budget). **
+12.**Calculate the "Ad Efficiency Score" (Total Engagements / Total Budget).**
 ```sql
 SELECT  
 c.name, 
@@ -194,7 +194,7 @@ LIMIT 5;
 
 ```
 
-**13. Compare Facebook vs. Instagram Conversion Rates.** 
+13**Compare Facebook vs. Instagram Conversion Rates.** 
 •  Purpose: Directly identify the most effective platform for driving sales.
 
 ```sql
@@ -219,7 +219,7 @@ ORDER BY conversion_rate DESC
 ```
 
 
-**14. Identify the "Peak Engagement Hour" for each Ad Type. **  
+14**Identify the "Peak Engagement Hour" for each Ad Type.**  
 • Purpose: Understand user activity patterns throughout the day to optimize ad scheduling.
 
 ```sql
@@ -240,7 +240,7 @@ ORDER BY peak_engagement DESC;
 
 ###B. Audience & Demographic Insights 
 
-**15. Find which Target Gender has the highest Purchase-to-Click ratio.**  
+15.**Find which Target Gender has the highest Purchase-to-Click ratio.**  
 •  Purpose: Analyze funnel efficiency across different gender segments.
 
 
@@ -268,7 +268,7 @@ ORDER BY 1;
 ```
 
 
-** 16. Rank Age Groups by total Budget Utilization.**  
+16**Rank Age Groups by total Budget Utilization.**  
 •  Purpose: Visualize how the budget is distributed across target demographics.
 
 ```sql
@@ -279,7 +279,7 @@ ORDER BY total_spend DESC;
 
 ```
 
-**17. Calculate the "Viral Impact" (Shares per Purchase).**  
+17**Calculate the "Viral Impact" (Shares per Purchase).**  
 •  Purpose: Measure the relationship between "viral" engagement and hard conversions.
 
 ```sql
@@ -298,7 +298,7 @@ ad_events;
 
 ###C. Data Integrity & Seasonal Reporting 
 
-**18. Identify campaigns with less than 1000 impressions (Underperformers). **  
+18**Identify campaigns with less than 1000 impressions (Underperformers).**  
 
 ```sql
 SELECT  
@@ -322,7 +322,7 @@ END) < 1000;
 ```
 
 
-** 19. Monthly Growth Trend of Purchases.**  
+19.**Monthly Growth Trend of Purchases.**  
 •  Purpose: Detect seasonal trends and peak activity months. 
 
 ```sql
@@ -339,7 +339,7 @@ ORDER BY purchases DESC;
 ```
 
 
-** 20. Performance Matrix: Budget vs. Total Engagements per Ad Type. **  
+20**Performance Matrix: Budget vs. Total Engagements per Ad Type.**  
 •  Purpose: Compare the cost of different ad formats against the engagement volume they generate.
 
 ```sql
@@ -362,7 +362,7 @@ ORDER BY budget DESC;
 ```
 
 
-**21. Find the most "Cost-Effective" Age Group (Budget per Purchase). **  
+21.**Find the most "Cost-Effective" Age Group (Budget per Purchase).**  
 •  Purpose: Determine which demographic provides the cheapest conversions for better budget 
 allocation. 
 
