@@ -574,6 +574,45 @@ LIMIT 5;
 
 <img width="259" height="130" alt="Q23" src="https://github.com/user-attachments/assets/161692f6-bbea-4d2a-bc3b-d9ce384140df" />
 
+### Strategies to Boost Ad Performance
+
+**1. Fix the "First Impression" (Creatives)**
+
+**The 1% Rule:** if less than 1% of people click (**CTR**), your ad is boring.
+
+*Action:* Change the first 3 seconds of your video or use a bolder image.
+
+**Ad Fatigue Management:** If the same person sees your ad more than 3 times (**Frequency**), they get tired of it and costs go up.
+
+* *Action:* Swap in a new ad or show it to a new group of people.
+
+**2. Spend Money Smarter (Budget)**
+
+* **Bet on the Winner:** Use SQL to see where you get the most sales (Instagram vs. Facebook).
+
+* *Action:* Stop spending money on the "losers" and move that cash to the "winners."
+
+* **The "Kill" Switch:** Don't let an ad bleed money.
+
+* *Action:* If an ad spends double your goal without a single sale, **turn it off immediately.**
+
+**3. Smooth Out the Customer Journey (The Funnel)**
+
+* **Don't Lie:** If your ad promises a "50% Discount" but your website says "10%," people will leave.
+
+* *Action:* Make sure your ad and your website say the exact same thing.
+
+* **Speed it Up:** If people click the ad but leave before the page loads, your site is too slow.
+
+* *Action:* Make your website faster so you don't lose the customers you just paid for.
+
+**4. Win Back Lost Customers (Retargeting)**
+
+* **The "Second Chance":** People often "Add to Cart" but get distracted and don't buy.
+
+* *Action:* Show a special ad with a **discount code** specifically to those people to finish the sale.
+
+
 ## Conclusion
 
 This performance tracking report empowers the marketing team to optimize budget allocation and ROI by providing clear visibility into campaign reach, engagement, and conversions across Facebook and Instagram. By leveraging dynamic visualizations and key performance metrics, the business can accurately identify high-performing platforms and understand audience engagement patterns to drive more effective advertising strategies.
