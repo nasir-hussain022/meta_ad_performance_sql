@@ -1,5 +1,11 @@
 # Meta Ad Performance Analysis – SQL Project 
 
+<img width="1006" height="580" alt="instagram_dashboard" src="https://github.com/user-attachments/assets/c39bcee9-01e4-4161-9f6e-57f4bdbceeed" />
+
+<img width="1009" height="579" alt="insta_tooltip" src="https://github.com/user-attachments/assets/9baa258e-e23a-4c3d-b2ff-07e67fb1d2f1" />
+
+<img width="1006" height="576" alt="facebook_dashboard" src="https://github.com/user-attachments/assets/1b332c70-83e2-45ef-a1b5-b031e0ac22ef" />
+
 ## Project Overview
 
 **Project Title**: Meta Ad Performance 
@@ -185,6 +191,151 @@ event_type = 'impression';
 ```
 <img width="141" height="72" alt="Q2" src="https://github.com/user-attachments/assets/ef7432f7-95b2-41ee-a0a0-337162d3822b" />
 
+2.**Count total Impressions: total reach by ad platform.**
+
+```sql
+SELECT 
+    ad_platform,
+    CONCAT(ROUND((SUM(CASE
+                        WHEN event_type = 'impression' THEN 1
+                        ELSE 0
+                    END)) / 1000,
+                    1),
+            'k') AS impression
+FROM
+    ad_events e
+        INNER JOIN
+    ads a ON a.ad_id = e.ad_id
+GROUP BY 1;
+
+
+```
+
+<img width="175" height="62" alt="image" src="https://github.com/user-attachments/assets/e5891d3c-a8b7-40a0-8e8b-726fb39b5260" />
+
+**Instagram / Facebook impression by month**
+
+```sql
+SELECT 
+    ad_platform,
+    MONTHNAME(`timestamp`) AS `month`,
+    CONCAT(ROUND((SUM(CASE
+                        WHEN event_type = 'impression' THEN 1
+                        ELSE 0
+                    END)) / 1000,
+                    1),
+            'k') AS impression
+FROM
+    ad_events e
+        INNER JOIN
+    ads a ON a.ad_id = e.ad_id
+GROUP BY 1 , 2;
+```
+
+<img width="218" height="123" alt="image" src="https://github.com/user-attachments/assets/0911a4d9-c574-486d-abca-7c645515e25b" />
+
+**count of clicks by ad platform**
+
+```sql
+SELECT 
+    ad_platform,
+    CONCAT(ROUND((SUM(CASE
+                        WHEN event_type = 'click' THEN 1
+                        ELSE 0
+                    END)) / 1000,
+                    1),
+            'k') AS clicks
+FROM
+    ad_events e
+        INNER JOIN
+    ads a ON a.ad_id = e.ad_id
+GROUP BY 1;
+```
+
+<img width="139" height="60" alt="image" src="https://github.com/user-attachments/assets/5cac3008-e791-4659-a216-ba6eb4df467c" />
+
+
+**count of clicks by month & ad platform**
+
+```sql
+SELECT 
+    ad_platform,
+    MONTHNAME(`timestamp`) AS `month`,
+    CONCAT(ROUND((SUM(CASE
+                        WHEN event_type = 'click' THEN 1
+                        ELSE 0
+                    END)) / 1000,
+                    1),
+            'k') AS clicks
+FROM
+    ad_events e
+        INNER JOIN
+    ads a ON a.ad_id = e.ad_id
+GROUP BY 1 , 2;
+```
+
+<img width="175" height="149" alt="image" src="https://github.com/user-attachments/assets/b2c88882-b7b8-45ec-b779-ffd16d888c0e" />
+
+
+**count of shares by ad platform**
+
+```sql
+SELECT 
+    ad_platform,
+    MONTHNAME(`timestamp`) AS `month`,
+    ROUND((SUM(CASE
+                WHEN event_type = 'share' THEN 1
+                ELSE 0
+            END)),
+            1) AS shares
+FROM
+    ad_events e
+        INNER JOIN
+    ads a ON a.ad_id = e.ad_id
+GROUP BY 1 , 2;
+```
+
+<img width="194" height="143" alt="image" src="https://github.com/user-attachments/assets/b71987b5-04c0-4451-aa4f-396ee4a0568a" />
+
+
+ **Total comment by ad platform**
+
+```sql
+SELECT 
+    ad_platform,
+    (SUM(CASE
+        WHEN event_type = 'comment' THEN 1
+        ELSE 0
+    END)) AS comments
+FROM
+    ad_events e
+        INNER JOIN
+    ads a ON a.ad_id = e.ad_id
+GROUP BY 1;
+```
+
+<img width="157" height="61" alt="image" src="https://github.com/user-attachments/assets/ddd8e43f-d468-449d-a645-a1624a1dd2a6" />
+
+**Total purchase by ad platform**
+
+```sql
+SELECT 
+    ad_platform,
+    (SUM(CASE
+        WHEN event_type = 'purchase' THEN 1
+        ELSE 0
+    END)) AS Purchase
+FROM
+    ad_events e
+        INNER JOIN
+    ads a ON a.ad_id = e.ad_id
+GROUP BY 1;
+```
+
+<img width="175" height="68" alt="image" src="https://github.com/user-attachments/assets/d4923f71-69ec-4a9c-8fa6-ef38d4f67ca0" />
+
+
+
 3.**List Facebook-only Ads: Filter ads strictly for the Facebook platform.**       
 ```sql
 SELECT  
@@ -200,16 +351,18 @@ ad_platform = 'facebook';
 
 4.**Budget per Platform: Total budget allocated to Facebook vs. Instagram.**
 ```sql
-SELECT  
-FROM 
-campaigns c 
-INNER JOIN -- 4. Budget per Platform: Total budget allocated to Facebook vs. Instagram. 
-ad_platform, ROUND(SUM(total_budget), 2) AS total_budget 
-ads a ON a.campaign_id = c.campaign_id 
-GROUP BY 1;
+SELECT 
+    ad_platform,
+    CONCAT(ROUND((SUM(c.total_budget)) / 1000000, 2),
+            'M') AS total_budget
+FROM
+    campaigns c
+        INNER JOIN
+    ads a ON a.campaign_id = c.campaign_id
+GROUP BY ad_platform;
 ```
+<img width="196" height="92" alt="budget" src="https://github.com/user-attachments/assets/52474223-f83b-4e5d-9995-e8be09eeccc5" />
 
-<img width="196" height="123" alt="Q4" src="https://github.com/user-attachments/assets/c228c555-d150-4f31-8a46-761240a1c111" />
 
 5.**Engagement by Age Group: Total interactions per demographic.**
 ```sql
@@ -230,7 +383,7 @@ GROUP BY 1;
 
 ```sql
 SELECT  
-FROM -- 6. Average Campaign Budget: Calculate the mean allocation. 
+FROM 
 ROUND(AVG(total_budget), 2) AS average_budget 
 campaigns; 
 ```
@@ -239,28 +392,31 @@ campaigns;
 
 ## Level: Advanced (Calculated Metrics & Trends) 
 
-7.**Click-Through Rate (CTR) by Ad Type: Identify which format drives most intent.**
+7.**Click-Through Rate (CTR) by Ad Type and ad platform: Identify which format drives most intent.**
 
 ```sql
-SELECT  
-ad_type, 
-CONCAT(ROUND((COUNT(CASE 
-WHEN e.event_type = 'click' THEN 1 
-ELSE 0 
-END) / COUNT(CASE 
-WHEN e.event_type = 'impression' THEN 1 
-ELSE 0 
-END)) * 100, 
-2), 
-'%') AS CTR 
-FROM 
-ads a 
-INNER JOIN 
-ad_events e ON a.ad_id = e.ad_id 
-GROUP BY a.ad_type; 
+SELECT 
+    ad_platform,
+    ad_type,
+    CONCAT(ROUND(IFNULL((SUM(CASE
+                                WHEN e.event_type = 'click' THEN 1
+                                ELSE 0
+                            END)),
+                            0) / NULLIF((SUM(CASE
+                                WHEN event_type = 'impression' THEN 1
+                                ELSE 0
+                            END)),
+                            0) * 100,
+                    2),
+            '%') AS CTR
+FROM
+    ad_events e
+        INNER JOIN
+    ads a ON a.ad_id = e.ad_id
+GROUP BY 1 , 2;
 ```
 
-<img width="166" height="134" alt="Q7" src="https://github.com/user-attachments/assets/befc08e4-4789-41f6-aae7-fc101f0333fd" />
+<img width="202" height="123" alt="ctr" src="https://github.com/user-attachments/assets/527e0c65-df6f-4890-9580-26dd1f796b3c" />
 
 
 8.**Hourly Activity Pattern: Find peak activity hours (0-23).**
@@ -326,8 +482,7 @@ WHEN e.event_type = 'purchase' THEN 1
 END)) / (COUNT(DISTINCT e.user_id)) * 100, 
 2), 
 '%') AS purchase_rate
-FROM 
-Email- nasirhussainnk172@gmail.com  LinkedIn- Nasir-hussain022 GitHub- Nasir_hussain022 
+FROM  
 ad_events e 
 INNER JOIN 
 users u ON u.user_id = e.user_id 
@@ -366,27 +521,28 @@ LIMIT 5;
 •  Purpose: Directly identify the most effective platform for driving sales.
 
 ```sql
-SELECT  
-a.ad_platform, 
-CONCAT(ROUND((COUNT(CASE 
-WHEN e.event_type = 'purchase' THEN 1 
-ELSE 0 
-END)) / (COUNT(CASE 
-WHEN e.event_type = 'click' THEN 1 
-ELSE 0 
-END)) * 100, 
-0), 
-'%') AS conversion_rate 
-FROM 
-ads a 
-INNER JOIN 
-GROUP BY a.ad_platform 
-ad_events e ON e.ad_id = a.ad_id 
-ORDER BY conversion_rate DESC 
+
+SELECT 
+    ad_platform,
+    CONCAT(ROUND((SUM(CASE
+                        WHEN e.event_type = 'purchase' THEN 1
+                        ELSE 0
+                    END)) / SUM(CASE
+                        WHEN event_type = 'click' THEN 1
+                        ELSE 0
+                    END) * 100,
+                    2),
+            '%') AS conversion_rate
+FROM
+    ad_events e
+        INNER JOIN
+    ads a ON a.ad_id = e.ad_id
+GROUP BY ad_platform;
 
 ```
 
-<img width="193" height="84" alt="Q14" src="https://github.com/user-attachments/assets/e8d6637a-71c0-46e9-93ce-093fd2954c8f" />
+<img width="202" height="61" alt="Screenshot 2026-02-12 220136" src="https://github.com/user-attachments/assets/9d1b025b-f8bd-44e9-bb47-9743dd9dbcb4" />
+
 
 14.**Identify the "Peak Engagement Hour" for each Ad Type.**  
 • Purpose: Understand user activity patterns throughout the day to optimize ad scheduling.
