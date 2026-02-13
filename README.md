@@ -191,7 +191,9 @@ event_type = 'impression';
 ```
 <img width="141" height="72" alt="Q2" src="https://github.com/user-attachments/assets/ef7432f7-95b2-41ee-a0a0-337162d3822b" />
 
-2.**Count total Impressions: total reach by ad platform.**
+## Level: Intermediate (Aggregation & Joins) 
+
+3.**Count total Impressions: total reach by ad platform.**
 
 ```sql
 SELECT 
@@ -213,7 +215,7 @@ GROUP BY 1;
 
 <img width="175" height="62" alt="image" src="https://github.com/user-attachments/assets/e5891d3c-a8b7-40a0-8e8b-726fb39b5260" />
 
-**Instagram / Facebook impression by month**
+4.**Instagram / Facebook impression by month**
 
 ```sql
 SELECT 
@@ -234,7 +236,7 @@ GROUP BY 1 , 2;
 
 <img width="218" height="123" alt="image" src="https://github.com/user-attachments/assets/0911a4d9-c574-486d-abca-7c645515e25b" />
 
-**count of clicks by ad platform**
+5.**count of clicks by ad platform**
 
 ```sql
 SELECT 
@@ -255,7 +257,7 @@ GROUP BY 1;
 <img width="139" height="60" alt="image" src="https://github.com/user-attachments/assets/5cac3008-e791-4659-a216-ba6eb4df467c" />
 
 
-**count of clicks by month & ad platform**
+6.**count of clicks by month & ad platform**
 
 ```sql
 SELECT 
@@ -277,7 +279,7 @@ GROUP BY 1 , 2;
 <img width="175" height="149" alt="image" src="https://github.com/user-attachments/assets/b2c88882-b7b8-45ec-b779-ffd16d888c0e" />
 
 
-**count of shares by ad platform**
+7.**count of shares by ad platform**
 
 ```sql
 SELECT 
@@ -298,7 +300,7 @@ GROUP BY 1 , 2;
 <img width="194" height="143" alt="image" src="https://github.com/user-attachments/assets/b71987b5-04c0-4451-aa4f-396ee4a0568a" />
 
 
- **Total comment by ad platform**
+ 8.**Total comment by ad platform**
 
 ```sql
 SELECT 
@@ -316,7 +318,7 @@ GROUP BY 1;
 
 <img width="157" height="61" alt="image" src="https://github.com/user-attachments/assets/ddd8e43f-d468-449d-a645-a1624a1dd2a6" />
 
-**Total purchase by ad platform**
+9.**Total purchase by ad platform**
 
 ```sql
 SELECT 
@@ -336,7 +338,7 @@ GROUP BY 1;
 
 
 
-3.**List Facebook-only Ads: Filter ads strictly for the Facebook platform.**       
+10.**List Facebook-only Ads: Filter ads strictly for the Facebook platform.**       
 ```sql
 SELECT  
 ad_type, ad_platform 
@@ -347,9 +349,8 @@ ad_platform = 'facebook';
 ```
 <img width="167" height="171" alt="Q3" src="https://github.com/user-attachments/assets/42a3b08e-e1c5-45fb-9adb-21b3ba48067e" />
 
-## Level: Intermediate (Aggregation & Joins) 
 
-4.**Budget per Platform: Total budget allocated to Facebook vs. Instagram.**
+11.**Budget per Platform: Total budget allocated to Facebook vs. Instagram.**
 ```sql
 SELECT 
     ad_platform,
@@ -364,7 +365,7 @@ GROUP BY ad_platform;
 <img width="196" height="92" alt="budget" src="https://github.com/user-attachments/assets/52474223-f83b-4e5d-9995-e8be09eeccc5" />
 
 
-5.**Engagement by Age Group: Total interactions per demographic.**
+12.**Engagement by Age Group: Total interactions per demographic.**
 ```sql
 SELECT  
 age_group, COUNT(event_type) AS engagement 
@@ -379,7 +380,7 @@ GROUP BY 1;
 
 <img width="194" height="166" alt="Q5" src="https://github.com/user-attachments/assets/e2823774-0f2e-4c89-90df-d7b1c9e43246" />
 
-6.**Average Campaign Budget: Calculate the mean allocation.**
+13.**Average Campaign Budget: Calculate the mean allocation.**
 
 ```sql
 SELECT  
@@ -392,7 +393,7 @@ campaigns;
 
 ## Level: Advanced (Calculated Metrics & Trends) 
 
-7.**Click-Through Rate (CTR) by Ad Type and ad platform: Identify which format drives most intent.**
+14.**Click-Through Rate (CTR) by Ad Type and ad platform: Identify which format drives most intent.**
 
 ```sql
 SELECT 
@@ -419,7 +420,7 @@ GROUP BY 1 , 2;
 <img width="202" height="123" alt="ctr" src="https://github.com/user-attachments/assets/527e0c65-df6f-4890-9580-26dd1f796b3c" />
 
 
-8.**Hourly Activity Pattern: Find peak activity hours (0-23).**
+15.**Hourly Activity Pattern: Find peak activity hours (0-23).**
 
 ```sql
 SELECT  
@@ -433,7 +434,7 @@ LIMIT 5;
 
 <img width="163" height="137" alt="Q8" src="https://github.com/user-attachments/assets/0e4175d6-d242-48be-9101-d95e33fb1eee" />
 
-9.**Hourly Activity Pattern: Find 2nd peak activity hours (0-23).**
+16.**Hourly Activity Pattern: Find 2nd peak activity hours (0-23).**
 ```sql
 
 SELECT  
@@ -457,7 +458,7 @@ LIMIT 1;
 
 <img width="159" height="78" alt="Q9" src="https://github.com/user-attachments/assets/a360cfa3-45f8-4095-bd02-b7b57194c153" />
 
-10.**Weekly Performance Trend: Stacked view of performance per week.**
+17.**Weekly Performance Trend: Stacked view of performance per week.**
 
 ```sql
 SELECT  
@@ -473,7 +474,7 @@ ORDER BY performance DESC;
 
 <img width="238" height="150" alt="Q10" src="https://github.com/user-attachments/assets/eaea7ed4-0921-4636-a0f6-3af2b3df4a03" />
 
-11.**High-ROI Gender Segments: Purchase rates for Target Genders.**
+18.**High-ROI Gender Segments: Purchase rates for Target Genders.**
 ```sql
 SELECT  
 u.user_gender, 
@@ -495,7 +496,7 @@ A. Business Logic & Performance KPIs
 
 ## A. Business Logic & Performance KPIs 
 
-12.**Calculate the "Ad Efficiency Score" (Total Engagements / Total Budget).**
+19.**Calculate the "Ad Efficiency Score" (Total Engagements / Total Budget).**
 ```sql
 SELECT  
 c.name, 
@@ -517,7 +518,7 @@ LIMIT 5;
 
 <img width="286" height="101" alt="Q13" src="https://github.com/user-attachments/assets/846957bc-ff11-4c2f-9658-ae9f61294a13" />
 
-13.**Compare Facebook vs. Instagram Conversion Rates.** 
+20.**Compare Facebook vs. Instagram Conversion Rates.** 
 •  Purpose: Directly identify the most effective platform for driving sales.
 
 ```sql
@@ -544,7 +545,7 @@ GROUP BY ad_platform;
 <img width="202" height="61" alt="Screenshot 2026-02-12 220136" src="https://github.com/user-attachments/assets/9d1b025b-f8bd-44e9-bb47-9743dd9dbcb4" />
 
 
-14.**Identify the "Peak Engagement Hour" for each Ad Type.**  
+21.**Identify the "Peak Engagement Hour" for each Ad Type.**  
 • Purpose: Understand user activity patterns throughout the day to optimize ad scheduling.
 
 ```sql
@@ -568,7 +569,7 @@ ORDER BY peak_engagement DESC;
 
 ## B. Audience & Demographic Insights 
 
-15.**Find which Target Gender has the highest Purchase-to-Click ratio.**  
+22.**Find which Target Gender has the highest Purchase-to-Click ratio.**  
 •  Purpose: Analyze funnel efficiency across different gender segments.
 
 
@@ -598,7 +599,7 @@ ORDER BY 1;
 <img width="206" height="95" alt="Q16" src="https://github.com/user-attachments/assets/3945b075-724f-4549-947b-a9cef653f410" />
 
 
-16.**Rank Age Groups by total Budget Utilization.**  
+23.**Rank Age Groups by total Budget Utilization.**  
 •  Purpose: Visualize how the budget is distributed across target demographics.
 
 ```sql
@@ -612,7 +613,7 @@ ORDER BY total_spend DESC;
 <img width="204" height="98" alt="Q17" src="https://github.com/user-attachments/assets/f31702d5-5120-4535-ae32-28ca82b25b65" />
 
 
-17.**Calculate the "Viral Impact" (Shares per Purchase).**  
+24.**Calculate the "Viral Impact" (Shares per Purchase).**  
 •  Purpose: Measure the relationship between "viral" engagement and hard conversions.
 
 ```sql
@@ -634,7 +635,7 @@ ad_events;
 
 ## C. Data Integrity & Seasonal Reporting 
 
-18.**Identify campaigns with less than 1000 impressions (Underperformers).**  
+25.**Identify campaigns with less than 1000 impressions (Underperformers).**  
 
 ```sql
 SELECT  
@@ -659,7 +660,7 @@ END) < 1000;
 
 <img width="260" height="119" alt="Q20" src="https://github.com/user-attachments/assets/fbe909b6-c685-4c74-b793-c59720a032cb" />
 
-19.**Monthly Growth Trend of Purchases.**  
+26.**Monthly Growth Trend of Purchases.**  
 •  Purpose: Detect seasonal trends and peak activity months. 
 
 ```sql
@@ -677,7 +678,7 @@ ORDER BY purchases DESC;
 
 <img width="221" height="121" alt="Q21" src="https://github.com/user-attachments/assets/9dd095f0-a09c-4c23-a8f1-5dcf3cf4646d" />
 
-20.**Performance Matrix: Budget vs. Total Engagements per Ad Type.**  
+27.**Performance Matrix: Budget vs. Total Engagements per Ad Type.**  
 •  Purpose: Compare the cost of different ad formats against the engagement volume they generate.
 
 ```sql
@@ -702,7 +703,7 @@ ORDER BY budget DESC;
 <img width="281" height="118" alt="Q22" src="https://github.com/user-attachments/assets/dc0ff6fd-9102-483f-bd39-a48051e6f3d1" />
 
 
-21.**Find the most "Cost-Effective" Age Group (Budget per Purchase).**  
+28.**Find the most "Cost-Effective" Age Group (Budget per Purchase).**  
 •  Purpose: Determine which demographic provides the cheapest conversions for better budget 
 allocation. 
 
