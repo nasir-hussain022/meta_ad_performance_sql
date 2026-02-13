@@ -171,10 +171,10 @@ modify column `timestamp` datetime;
 1.**Retrieve unique ad types:  Identify all formats like Image or Video.**
 
 ```sql
-SELECT DISTINCT 
-ad_type 
-FROM 
-ads; 
+SELECT DISTINCT
+    ad_type
+FROM
+    ads; 
          
 ```
 <img width="96" height="141" alt="Q1" src="https://github.com/user-attachments/assets/d488dad3-1b9f-47a6-b88c-b66848939529" />
@@ -182,12 +182,12 @@ ads;
 2.**Count total Impressions: total reach across all campaigns.**
 
 ```sql
-SELECT  
-COUNT(*) 
-FROM 
-ad_events 
-WHERE 
-event_type = 'impression'; 
+  SELECT 
+    COUNT(*)
+FROM
+    ad_events
+WHERE
+    event_type = 'impression'; 
 ```
 <img width="141" height="72" alt="Q2" src="https://github.com/user-attachments/assets/ef7432f7-95b2-41ee-a0a0-337162d3822b" />
 
@@ -340,12 +340,12 @@ GROUP BY 1;
 
 10.**List Facebook-only Ads: Filter ads strictly for the Facebook platform.**       
 ```sql
-SELECT  
-ad_type, ad_platform 
-FROM 
-ads 
-WHERE 
-ad_platform = 'facebook'; 
+  SELECT 
+    ad_type, ad_platform
+FROM
+    ads
+WHERE
+    ad_platform = 'facebook'; 
 ```
 <img width="167" height="171" alt="Q3" src="https://github.com/user-attachments/assets/42a3b08e-e1c5-45fb-9adb-21b3ba48067e" />
 
@@ -367,29 +367,29 @@ GROUP BY ad_platform;
 
 12.**Engagement by Age Group: Total interactions per demographic.**
 ```sql
-SELECT  
-age_group, COUNT(event_type) AS engagement 
-FROM 
-ad_events e 
-INNER JOIN 
-users u ON u.user_id = e.user_id 
-WHERE 
-e.event_type IN ('like' , 'comment', 'share', 'click', 'purchase') 
+SELECT 
+    age_group,
+    CONCAT(ROUND(COUNT(event_type) / 1000, 2), 'K') AS engagement
+FROM
+    ad_events e
+        INNER JOIN
+    users u ON u.user_id = e.user_id
+WHERE
+    e.event_type IN ('like' , 'comment', 'share', 'click', 'purchase')
 GROUP BY 1; 
 ```
 
-<img width="194" height="166" alt="Q5" src="https://github.com/user-attachments/assets/e2823774-0f2e-4c89-90df-d7b1c9e43246" />
+<img width="197" height="118" alt="image" src="https://github.com/user-attachments/assets/6ce14b51-1f00-4f2c-b4ae-59974d026bbb" />
 
-13.**Average Campaign Budget: Calculate the mean allocation.**
 
 ```sql
-SELECT  
-FROM 
-ROUND(AVG(total_budget), 2) AS average_budget 
-campaigns; 
+SELECT 
+    CONCAT(ROUND(AVG(total_budget) / 1000, 2), 'K') AS average_budget
+FROM
+    campaigns; 
 ```
 
-<img width="159" height="100" alt="Q6" src="https://github.com/user-attachments/assets/c8fa213c-6d54-46bd-b941-aa22258fe67a" />
+
 
 ## Level: Advanced (Calculated Metrics & Trends) 
 
@@ -417,18 +417,18 @@ FROM
 GROUP BY 1 , 2;
 ```
 
-<img width="202" height="123" alt="ctr" src="https://github.com/user-attachments/assets/527e0c65-df6f-4890-9580-26dd1f796b3c" />
+<img width="146" height="39" alt="Screenshot 2026-02-13 214535" src="https://github.com/user-attachments/assets/9314c8c9-1c8c-4e94-99e7-9f02e0fdfdb1" />
 
 
 15.**Hourly Activity Pattern: Find peak activity hours (0-23).**
 
 ```sql
-SELECT  
-HOUR(`timestamp`) AS hour, COUNT(*) AS peak_activity 
-FROM 
-ad_events 
-GROUP BY 1 
-ORDER BY peak_activity DESC 
+SELECT 
+    HOUR(`timestamp`) AS hour, COUNT(*) AS peak_activity
+FROM
+    ad_events
+GROUP BY 1
+ORDER BY peak_activity DESC
 LIMIT 5; 
 ```
 
@@ -437,21 +437,22 @@ LIMIT 5;
 16.**Hourly Activity Pattern: Find 2nd peak activity hours (0-23).**
 ```sql
 
-SELECT  
-FROM 
-ad_events 
-GROUP BY 1 
-HOUR(`timestamp`) AS hour, COUNT(*) AS peak_activity 
-HAVING COUNT(*) < (SELECT  
-MAX(peak_activity) 
-FROM 
-(SELECT  
-COUNT(*) AS peak_activity 
-FROM 
-ad_events 
-GROUP BY HOUR(`timestamp`)) AS abc)
-ORDER BY peak_activity DESC 
+SELECT 
+    HOUR(`timestamp`) AS hour, COUNT(*) AS peak_activity
+FROM
+    ad_events
+GROUP BY 1
+HAVING COUNT(*) < (SELECT 
+        MAX(peak_activity)
+    FROM
+        (SELECT 
+            COUNT(*) AS peak_activity
+        FROM
+            ad_events
+        GROUP BY HOUR(`timestamp`)) AS abc)
+ORDER BY peak_activity DESC
 LIMIT 1; 
+
 
 
 ```
@@ -461,14 +462,15 @@ LIMIT 1;
 17.**Weekly Performance Trend: Stacked view of performance per week.**
 
 ```sql
-SELECT  
-WEEK(`timestamp`) AS weeks, 
-event_type, 
-COUNT(*) AS performance 
-FROM 
-ad_events 
-GROUP BY 1 , 2 
+SELECT 
+    WEEK(`timestamp`) AS weeks,
+    event_type,
+    COUNT(*) AS performance
+FROM
+    ad_events
+GROUP BY 1 , 2
 ORDER BY performance DESC; 
+
 
 ```
 
@@ -476,19 +478,18 @@ ORDER BY performance DESC;
 
 18.**High-ROI Gender Segments: Purchase rates for Target Genders.**
 ```sql
-SELECT  
-u.user_gender, 
-CONCAT(ROUND((COUNT(CASE 
-WHEN e.event_type = 'purchase' THEN 1 
-END)) / (COUNT(DISTINCT e.user_id)) * 100, 
-2), 
-'%') AS purchase_rate
-FROM  
-ad_events e 
-INNER JOIN 
-users u ON u.user_id = e.user_id 
+SELECT 
+    u.user_gender,
+    CONCAT(ROUND((COUNT(CASE
+                        WHEN e.event_type = 'purchase' THEN 1
+                    END)) / (COUNT(DISTINCT e.user_id)) * 100,
+                    2),
+            '%') AS purchase_rate
+FROM
+    ad_events e
+        INNER JOIN
+    users u ON u.user_id = e.user_id
 GROUP BY 1; 
-A. Business Logic & Performance KPIs 
 
 ```
 
@@ -498,20 +499,20 @@ A. Business Logic & Performance KPIs
 
 19.**Calculate the "Ad Efficiency Score" (Total Engagements / Total Budget).**
 ```sql
-SELECT  
-c.name, 
-(COUNT(CASE 
-WHEN e.event_type IN ('like' , 'comment', 'share', 'click', 'purchase') THEN 1 
-ELSE 0 
-END) / c.total_budget) AS ad_efficiency_score 
-FROM 
-ad_events e 
-INNER JOIN 
-ads a ON e.ad_id = a.ad_id 
-INNER JOIN 
-campaigns c ON c.campaign_id = a.campaign_id 
-GROUP BY c.name , c.total_budget 
-ORDER BY ad_efficiency_score DESC 
+SELECT 
+    c.name,
+    (COUNT(CASE
+        WHEN e.event_type IN ('like' , 'comment', 'share', 'click', 'purchase') THEN 1
+        ELSE 0
+    END) / c.total_budget) AS ad_efficiency_score
+FROM
+    ad_events e
+        INNER JOIN
+    ads a ON e.ad_id = a.ad_id
+        INNER JOIN
+    campaigns c ON c.campaign_id = a.campaign_id
+GROUP BY c.name , c.total_budget
+ORDER BY ad_efficiency_score DESC
 LIMIT 5;
 
 ```
@@ -549,22 +550,26 @@ GROUP BY ad_platform;
 • Purpose: Understand user activity patterns throughout the day to optimize ad scheduling.
 
 ```sql
-SELECT ad_type, 
-HOUR(`timestamp`) AS `hour`, 
-(COUNT(CASE 
-10 
-WHEN event_type IN ('like' , 'comment', 'share', 'click', 'purchase') THEN 1 
-ELSE 0 
-END)) peak_engagement 
-FROM 
-ad_events e 
-INNER JOIN 
-ads a ON a.ad_id = e.ad_id 
-GROUP BY 1 , 2 
-ORDER BY peak_engagement DESC; 
+SELECT 
+    ad_type,
+    HOUR(`timestamp`) AS `hour`,
+    CONCAT(ROUND((COUNT(CASE 10
+                        WHEN event_type IN ('like' , 'comment', 'share', 'click', 'purchase') THEN 1
+                        ELSE 0
+                    END)) / 1000,
+                    2),
+            'K') peak_engagement
+FROM
+    ad_events e
+        INNER JOIN
+    ads a ON a.ad_id = e.ad_id
+GROUP BY 1 , 2
+ORDER BY peak_engagement DESC
+LIMIT 5; 
 ```
 
-<img width="238" height="92" alt="Q15" src="https://github.com/user-attachments/assets/e8eddfdc-95b6-4fa1-b86c-a577ac0af65f" />
+<img width="234" height="110" alt="image" src="https://github.com/user-attachments/assets/5d744032-99a2-4f6a-b0ec-8b93222d5826" />
+
 
 
 ## B. Audience & Demographic Insights 
@@ -575,58 +580,70 @@ ORDER BY peak_engagement DESC;
 
 ```sql
 
-SELECT  
-u.user_gender,  
-CONCAT(ROUND((COUNT(CASE 
-WHEN event_type = 'purchase' THEN 1 
-ELSE 0 
-END) / NULLIF(COUNT(CASE 
-WHEN event_type = 'click' THEN 1 
-ELSE 0 
-END), 
-0)) * 100,
-1), 
-'%') AS funnel_effiency 
-FROM 
-ad_events e 
-INNER JOIN 
-users u ON u.user_id = e.user_id 
-GROUP BY 1 
+
+SELECT 
+    u.user_gender,
+    CONCAT(ROUND((SUM(CASE
+                        WHEN event_type = 'purchase' THEN 1
+                        ELSE 0
+                    END) / NULLIF(SUM(CASE
+                                WHEN event_type = 'click' THEN 1
+                                ELSE 0
+                            END),
+                            0)) * 100,
+                    1),
+            '%') AS funnel_effiency
+FROM
+    ad_events e
+        INNER JOIN
+    users u ON u.user_id = e.user_id
+GROUP BY 1
 ORDER BY 1;
 
 ```
 
-<img width="206" height="95" alt="Q16" src="https://github.com/user-attachments/assets/3945b075-724f-4549-947b-a9cef653f410" />
+<img width="202" height="79" alt="image" src="https://github.com/user-attachments/assets/2271e480-e7f0-4847-8f46-9e67fbf0eddb" />
+
 
 
 23.**Rank Age Groups by total Budget Utilization.**  
 •  Purpose: Visualize how the budget is distributed across target demographics.
 
 ```sql
-SELECT age_group, SUM(total_budget) as total_spend 
-FROM ads 
-GROUP BY age_group 
+SELECT 
+    age_group,
+    CONCAT(ROUND(SUM(total_budget) / 1000000, 0),
+            'M') AS total_spend
+FROM
+    users u
+        INNER JOIN
+    ad_events e ON e.user_id = u.user_id
+        INNER JOIN
+    ads a ON a.ad_id = e.ad_id
+        INNER JOIN
+    campaigns c ON c.campaign_id = a.campaign_id
+GROUP BY age_group
 ORDER BY total_spend DESC; 
 
 ```
 
-<img width="204" height="98" alt="Q17" src="https://github.com/user-attachments/assets/f31702d5-5120-4535-ae32-28ca82b25b65" />
+<img width="162" height="73" alt="image" src="https://github.com/user-attachments/assets/52e69a73-0602-4fe9-bfb5-1b6a4ec2011d" />
 
 
 24.**Calculate the "Viral Impact" (Shares per Purchase).**  
 •  Purpose: Measure the relationship between "viral" engagement and hard conversions.
 
 ```sql
-SELECT  
-COUNT(CASE 
-WHEN event_type = 'shares' THEN 1 
-ELSE 0 
-END) / COUNT(CASE 
-WHEN event_type = 'purchase' THEN 1 
-ELSE 0 
-END) AS shares_per_purchase 
-FROM 
-ad_events;  
+SELECT 
+   (COUNT(CASE
+        WHEN event_type = 'shares' THEN 1
+        ELSE 0
+    END)) /(COUNT(CASE
+        WHEN event_type = 'purchase' THEN 1
+        ELSE 0
+    END)) AS shares_per_purchase
+FROM
+    ad_events;  
 
 ```
 
@@ -638,24 +655,24 @@ ad_events;
 25.**Identify campaigns with less than 1000 impressions (Underperformers).**  
 
 ```sql
-SELECT  
-c.name, 
-COUNT(CASE 
-WHEN event_type = 'impression' THEN 1 
-ELSE 0 
-END) AS impressions 
-FROM 
-campaigns c 
-LEFT JOIN 
-ads a ON a.campaign_id = c.campaign_id 
-INNER JOIN 
-ad_events e ON e.ad_id = a.ad_id 
-GROUP BY 1 
-HAVING COUNT(CASE 
-WHEN event_type = 'impression' THEN 1 
-ELSE 0 
-END) < 1000; 
-
+SELECT 
+    c.name,
+    COUNT(CASE
+        WHEN event_type = 'impression' THEN 1
+        ELSE 0
+    END) AS impressions
+FROM
+    campaigns c
+        LEFT JOIN
+    ads a ON a.campaign_id = c.campaign_id
+        INNER JOIN
+    ad_events e ON e.ad_id = a.ad_id
+GROUP BY 1
+HAVING COUNT(CASE
+    WHEN event_type = 'impression' THEN 1
+    ELSE 0
+END) < 1000
+LIMIT 5; 
 ```
 
 <img width="260" height="119" alt="Q20" src="https://github.com/user-attachments/assets/fbe909b6-c685-4c74-b793-c59720a032cb" />
@@ -664,43 +681,50 @@ END) < 1000;
 •  Purpose: Detect seasonal trends and peak activity months. 
 
 ```sql
-SELECT  
-MONTHNAME(`timestamp`) AS `month`, 
-COUNT(CASE 
-WHEN event_type = 'purchase' THEN 1 
-ELSE 0 
-END) AS purchases 
-FROM ad_events 
-GROUP BY 1 
+SELECT 
+    MONTHNAME(`timestamp`) AS `month`,
+    CONCAT(ROUND(COUNT(CASE
+                        WHEN event_type = 'purchase' THEN 1
+                        ELSE 0
+                    END) / 1000,
+                    1),
+            'K') AS purchases
+FROM
+    ad_events
+GROUP BY 1
 ORDER BY purchases DESC;
 
 ```
 
-<img width="221" height="121" alt="Q21" src="https://github.com/user-attachments/assets/9dd095f0-a09c-4c23-a8f1-5dcf3cf4646d" />
+<img width="165" height="95" alt="image" src="https://github.com/user-attachments/assets/be3188aa-bb9d-4994-acbd-53c1c8d4ba21" />
+
 
 27.**Performance Matrix: Budget vs. Total Engagements per Ad Type.**  
 •  Purpose: Compare the cost of different ad formats against the engagement volume they generate.
 
 ```sql
-SELECT  
-a.ad_type, 
-ROUND(SUM(c.total_budget), 2) AS budget, 
-(COUNT(CASE 
-WHEN event_type IN ('like' , 'comment', 'share', 'click', 'purchase') THEN 1 
-ELSE 0 
-END)) AS engagement 
-FROM 
-ad_events e 
-INNER JOIN 
-ads a ON a.ad_id = e.ad_id 
-INNER JOIN 
-campaigns c ON c.campaign_id = a.campaign_id 
-GROUP BY 1 
+SELECT 
+    a.ad_type,
+    CONCAT(ROUND(SUM(c.total_budget) / 1000000, 2),
+            'M') AS budget,
+    CONCAT(ROUND(COUNT(CASE
+                        WHEN event_type IN ('like' , 'comment', 'share', 'click', 'purchase') THEN 1
+                        ELSE 0
+                    END) / 1000,
+                    2),
+            'K') AS engagement
+FROM
+    ad_events e
+        INNER JOIN
+    ads a ON a.ad_id = e.ad_id
+        INNER JOIN
+    campaigns c ON c.campaign_id = a.campaign_id
+GROUP BY 1
 ORDER BY budget DESC; 
 
 ```
 
-<img width="281" height="118" alt="Q22" src="https://github.com/user-attachments/assets/dc0ff6fd-9102-483f-bd39-a48051e6f3d1" />
+<img width="224" height="89" alt="image" src="https://github.com/user-attachments/assets/de168c4e-e1f4-4d81-a7dd-b3cc0941890f" />
 
 
 28.**Find the most "Cost-Effective" Age Group (Budget per Purchase).**  
@@ -708,28 +732,32 @@ ORDER BY budget DESC;
 allocation. 
 
 ```sql
-SELECT  
-age_group, 
-ROUND(SUM(total_budget), 2) AS budget, 
-COUNT(CASE 
-WHEN event_type = 'purchase' THEN 1 
-ELSE 0 
-END) AS Purchases 
-FROM 
-users u 
-INNER JOIN 
-ad_events e ON e.user_id = u.user_id 
-INNER JOIN 
-ads a ON a.ad_id = e.ad_id 
-INNER JOIN 
-campaigns c ON c.campaign_id = a.campaign_id 
-GROUP BY 1 
-ORDER BY budget , purchases ASC 
+SELECT 
+    age_group,
+    CONCAT(ROUND(SUM(total_budget) / 1000000, 2),
+            'M') AS budget,
+    CONCAT(ROUND(COUNT(CASE
+                        WHEN event_type = 'purchase' THEN 1
+                        ELSE 0
+                    END) / 1000,
+                    2),
+            'K') AS Purchases
+FROM
+    users u
+        INNER JOIN
+    ad_events e ON e.user_id = u.user_id
+        INNER JOIN
+    ads a ON a.ad_id = e.ad_id
+        INNER JOIN
+    campaigns c ON c.campaign_id = a.campaign_id
+GROUP BY 1
+ORDER BY budget , purchases ASC
 LIMIT 5; 
 
 ```
 
-<img width="259" height="130" alt="Q23" src="https://github.com/user-attachments/assets/161692f6-bbea-4d2a-bc3b-d9ce384140df" />
+<img width="219" height="58" alt="image" src="https://github.com/user-attachments/assets/b5273fc9-94f4-4abc-943b-f2eb8940ef93" />
+
 
 ### Strategies to Boost Ad Performance
 
