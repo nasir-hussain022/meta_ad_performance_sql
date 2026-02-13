@@ -381,6 +381,7 @@ GROUP BY 1;
 
 <img width="197" height="118" alt="image" src="https://github.com/user-attachments/assets/6ce14b51-1f00-4f2c-b4ae-59974d026bbb" />
 
+13.**Average budget**
 
 ```sql
 SELECT 
@@ -389,6 +390,7 @@ FROM
     campaigns; 
 ```
 
+<img width="136" height="51" alt="image" src="https://github.com/user-attachments/assets/f0f057a8-ffb7-46b7-972f-f3b6a7bdfd1f" />
 
 
 ## Level: Advanced (Calculated Metrics & Trends) 
@@ -417,7 +419,8 @@ FROM
 GROUP BY 1 , 2;
 ```
 
-<img width="146" height="39" alt="Screenshot 2026-02-13 214535" src="https://github.com/user-attachments/assets/9314c8c9-1c8c-4e94-99e7-9f02e0fdfdb1" />
+<img width="192" height="123" alt="image" src="https://github.com/user-attachments/assets/226eaa61-54b4-4c67-aef3-ff53e5c9d059" />
+
 
 
 15.**Hourly Activity Pattern: Find peak activity hours (0-23).**
@@ -476,7 +479,7 @@ ORDER BY performance DESC;
 
 <img width="238" height="150" alt="Q10" src="https://github.com/user-attachments/assets/eaea7ed4-0921-4636-a0f6-3af2b3df4a03" />
 
-18.**High-ROI Gender Segments: Purchase rates for Target Genders.**
+18.**High-ROI Gender Segments: Purchase rates for user Genders.**
 ```sql
 SELECT 
     u.user_gender,
@@ -581,8 +584,9 @@ LIMIT 5;
 ```sql
 
 
+
 SELECT 
-    u.user_gender,
+    a.target_gender,
     CONCAT(ROUND((SUM(CASE
                         WHEN event_type = 'purchase' THEN 1
                         ELSE 0
@@ -594,15 +598,16 @@ SELECT
                     1),
             '%') AS funnel_effiency
 FROM
-    ad_events e
+    ads a 
         INNER JOIN
-    users u ON u.user_id = e.user_id
+    ad_events e ON e.ad_id = a.ad_id
 GROUP BY 1
 ORDER BY 1;
 
 ```
 
-<img width="202" height="79" alt="image" src="https://github.com/user-attachments/assets/2271e480-e7f0-4847-8f46-9e67fbf0eddb" />
+<img width="217" height="75" alt="image" src="https://github.com/user-attachments/assets/9a3b64cb-92ba-4700-b439-6ba5e7edbf3e" />
+
 
 
 
