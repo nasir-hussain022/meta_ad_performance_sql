@@ -1,4 +1,4 @@
-# Meta Ad Performance Analysis – SQL Project 
+# Meta Ad Performance Analysis – SQL & Power BI Project 
 
 <img width="1006" height="580" alt="instagram_dashboard" src="https://github.com/user-attachments/assets/c39bcee9-01e4-4161-9f6e-57f4bdbceeed" />
 
